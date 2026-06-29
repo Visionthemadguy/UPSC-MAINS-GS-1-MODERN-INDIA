@@ -1,0 +1,35 @@
+name: Build UPSC PDF
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Pandoc + LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+          sudo apt-get install -y texlive-latex-base
+          sudo apt-get install -y texlive-fonts-recommended
+          sudo apt-get install -y texlive-latex-extra
+
+      - name: Generate PDF
+        run: |
+          pandoc notes.md \
+          -o UPSC_OnePager_Notes.pdf \
+          --pdf-engine=pdflatex \
+          -V geometry:margin=0.5in \
+          -V fontsize=10pt \
+          --toc
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: UPSC-PDF
+          path: UPSC_OnePager_Notes.pdf
