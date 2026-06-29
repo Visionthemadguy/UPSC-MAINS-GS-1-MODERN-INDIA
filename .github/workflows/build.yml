@@ -14,19 +14,13 @@ jobs:
       - name: Install Pandoc + LaTeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc
-          sudo apt-get install -y texlive-latex-base
-          sudo apt-get install -y texlive-fonts-recommended
-          sudo apt-get install -y texlive-latex-extra
+          sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+
+      - name: Show files (debug)
+        run: ls -la
 
       - name: Generate PDF
-        run: |
-          pandoc notes.md \
-          -o UPSC_OnePager_Notes.pdf \
-          --pdf-engine=pdflatex \
-          -V geometry:margin=0.5in \
-          -V fontsize=10pt \
-          --toc
+        run: pandoc ./notes.md -o UPSC_OnePager_Notes.pdf --pdf-engine=pdflatex -V geometry:margin=0.5in -V fontsize=10pt
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
