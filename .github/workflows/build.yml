@@ -16,11 +16,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
 
-      - name: Show files (debug)
+      - name: Show files
         run: ls -la
 
       - name: Generate PDF
-        run: pandoc ./notes.md -o UPSC_OnePager_Notes.pdf --pdf-engine=pdflatex -V geometry:margin=0.5in -V fontsize=10pt
+        run: pandoc ./notes.md -o UPSC_OnePager_Notes.pdf
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
